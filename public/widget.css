@@ -1,0 +1,9 @@
+#my-widget {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  min-width: 250px;
+  min-height: 60px;
+  font-family: Arial, sans-serif;
+} 
