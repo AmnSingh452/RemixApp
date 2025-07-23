@@ -63,3 +63,21 @@ export async function getAccessToken(shop, code) {
   const data = await res.json();
   return data.access_token;
 }
+
+// Register APP_UNINSTALLED webhook for a shop
+export async function registerAppUninstalledWebhook(shop, accessToken) {
+  await registerWebhooks({
+    shop,
+    accessToken,
+    webhooks: [
+      {
+        path: "/webhooks/app/uninstalled",
+        topic: "APP_UNINSTALLED",
+      },
+      {
+        path: "/webhooks/app/scopes_update",
+        topic: "APP_SCOPES_UPDATE",
+      },
+    ],
+  });
+}

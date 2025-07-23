@@ -10,6 +10,9 @@ export const loader = async ({ request }) => {
 
   const accessToken = await getAccessToken(shop, code);
 
+  await registerAppUninstalledWebhook(shop, accessToken);
+  await registerScopesUpdateWebhook(shop, accessToken);
+
   await prisma.shop.upsert({
     where: { shopDomain: shop },
     update: { accessToken },
