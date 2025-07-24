@@ -11,7 +11,7 @@ import {
 } from "@shopify/polaris";
 import polarisTranslations from "@shopify/polaris/locales/en.json";
 import polarisStyles from "@shopify/polaris/build/esm/styles.css?url";
-import { login, shopModel } from "../../shopify.server";
+import { login } from "../../shopify.server";
 import { loginErrorMessage } from "./error.server";
 
 export const links = () => [{ rel: "stylesheet", href: polarisStyles }];
@@ -24,25 +24,6 @@ export const loader = async ({ request }) => {
 
 export const action = async ({ request }) => {
   const errors = loginErrorMessage(await login(request));
-
-  // Store shop and access token after successful login
-  const formData = await request.formData();
-  const shop = formData.get("shop");
-  if (!errors.shop && shop) {
-    // Retrieve session to get access token
-    // (Assume session is available after login)
-    // You may need to adjust this depending on your session logic
-    const session = await shopModel.findFirst({ where: { shopDomain: shop } });
-    if (!session) {
-      // Save a placeholder access token for demonstration
-      await shopModel.create({
-        data: {
-          shopDomain: shop,
-          accessToken: "PLACEHOLDER_ACCESS_TOKEN"
-        }
-      });
-    }
-  }
 
   return {
     errors,

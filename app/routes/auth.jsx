@@ -1,9 +1,11 @@
 import { redirect } from "@remix-run/node";
-import { getShopifyAuthUrl } from "../shopify.server";
+import { login } from "../shopify.server";
 
 export const loader = async ({ request }) => {
   const url = new URL(request.url);
   const shop = url.searchParams.get("shop");
   if (!shop) return new Response("Missing shop", { status: 400 });
-  return redirect(getShopifyAuthUrl(shop));
-}; 
+  
+  // Use the official SDK login function
+  return await login(request);
+};

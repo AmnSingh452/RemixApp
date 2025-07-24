@@ -10,7 +10,7 @@ export const action = async ({ request }) => {
   // If this webhook already ran, the session may have been deleted previously.
   if (session) {
     await prisma.session.deleteMany({ where: { shop } });
-    await prisma.shop.deleteMany({ where: { shopDomain: shop } });
+    // We no longer need to delete from the Shop model as we're using the official SDK
   }
 
   return new Response();
